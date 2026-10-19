@@ -138,7 +138,7 @@ Driver 100% Go, sem CGO, compatível com Windows, Linux e Mac.
 O arquivo do banco é criado automaticamente:
 
 ```
-data.db
+shortener.db
 ```
 
 ## 👩‍💻 Autora
