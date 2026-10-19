@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Encurtador de URL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+        button {
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f2f2f2;
+            border-radius: 6px;
+        }
+        a {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Encurtador de URL</h2>
+
+    <input id="urlInput" type="text" placeholder="Digite a URL para encurtar">
+    <button onclick="shorten()">Encurtar</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function shorten() {
+            const url = document.getElementById("urlInput").value;
+
+            const response = await fetch("http://localhost:8080/shorten", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url })
+            });
+
+            const data = await response.json();
+
+            if (data.short_code) {
+                const shortUrl = `http://localhost:8080/${data.short_code}`;
+                document.getElementById("result").innerHTML =
+                    `URL encurtada: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+            } else {
+                document.getElementById("result").innerHTML =
+                    "Erro ao encurtar a URL.";
+            }
+        }
+    </script>
+
+</body>
+</html>
